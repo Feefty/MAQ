@@ -30,37 +30,45 @@ require_once 'header.php' ?>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="role">Role</label>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                <label class="radio-inline">
-                                    <input type="radio" name="role" value="student" checked>
-                                    Student
-                                </label>
+                        <?php if ($Util->getRole() == 'teacher'): ?>
+                            <input type="hidden" name="role" value="student">
+                        <?php else: ?>
+                            <div class="form-group">
+                                <label for="role">Role</label>
+                                <div class="row">
+                                    <div class="col-sm-12">
                                     <label class="radio-inline">
-                                        <input type="radio" name="role" value="teacher">
-                                        Teacher
+                                        <input type="radio" name="role" value="student" checked>
+                                        Student
                                     </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="role" value="teacher">
+                                            Teacher
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="section">Section</label>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <select class="form-control" name="section" id="section">
-                                        <?php foreach ($sections as $section): ?>
-                                            <?php if ($section['fld_section_id'] == $sectionId): ?>
-                                                <option value="<?= $section['fld_section_id'] ?>" selected><?= $section['fld_name'] ?></option>
-                                            <?php else: ?>
-                                                <option value="<?= $section['fld_section_id'] ?>"><?= $section['fld_name'] ?></option>
-                                            <?php endif ?>
-                                        <?php endforeach ?>
-                                    </select>
+                        <?php endif ?>
+                        <?php if ($Util->getRole() == 'teacher'): ?>
+                            <input type="hidden" name="section" value="<?= $sectionId ?>">
+                        <?php else: ?>
+                            <div class="form-group">
+                                <label for="section">Section</label>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                            <select class="form-control" name="section" id="section">
+                                                <?php foreach ($sections as $section): ?>
+                                                    <?php if ($section['fld_section_id'] == $sectionId): ?>
+                                                        <option value="<?= $section['fld_section_id'] ?>" selected><?= $section['fld_name'] ?></option>
+                                                    <?php else: ?>
+                                                        <option value="<?= $section['fld_section_id'] ?>"><?= $section['fld_name'] ?></option>
+                                                    <?php endif ?>
+                                                <?php endforeach ?>
+                                            </select>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        <?php endif ?>
                         <button type="submit" name="registration_code_create" class="btn btn-primary"><i class="fa fa-check fa-fw"></i> Create</button> <a href="<?= $config['base'] ?>/registration_code.php" class="btn btn-default">Cancel</a>
                     </form>
                 </div>
